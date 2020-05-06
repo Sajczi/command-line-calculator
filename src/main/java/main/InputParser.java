@@ -13,16 +13,35 @@ public class InputParser {
         try {
             return BigDecimal.valueOf(Long.parseLong(value));
         } catch(NumberFormatException e) {
-            throw new IllegalArgumentException("No numeric value to apply operation.")
+            throw new IllegalArgumentException("No numeric value to apply operation.");
         }
     }
 
     public void validate(String input) {
-        parseOperation(input);
-        parseOperationValue(input);
+        validateArguments(input);
         if (isDivideByZeroOperation(input)) {
             throw new IllegalArgumentException("Cannot divide by zero!");
         }
+    }
+
+    private void validateArguments(String input) {
+        if (!containsTwoArguments(input)) {
+            throw new IllegalArgumentException("Command should contain 2 arguments");
+        }
+        validateIsFirstArgumentAnOperation(input);
+        validateIsSecondArgumentNumeric(input);
+    }
+
+    private boolean containsTwoArguments(String input) {
+        return input.split(" ").length == 2;
+    }
+
+    private void validateIsFirstArgumentAnOperation(String input) {
+        parseOperation(input);
+    }
+
+    private void validateIsSecondArgumentNumeric(String input) {
+        parseOperationValue(input);
     }
 
     private boolean isDivideByZeroOperation(String input) {

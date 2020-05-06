@@ -37,4 +37,9 @@ public class InputParserTest {
     public void shouldNotParseOperationValueInputWithOneArgument() {
         classUnderTest.parseOperationValue("ADD2 ");
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotAllowThreeArguments() {
+        classUnderTest.validate("ADD 2 2");
+    }
 }
